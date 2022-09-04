@@ -1,4 +1,5 @@
 
+from cgitb import reset
 from turtle import Screen
 from scoreboard import Scoreboard
 from snake import Snake
@@ -39,14 +40,15 @@ while game_is_on:
     
     #Detect collisions with Wall
     if snake.head.xcor() > 280 or snake.head.ycor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() < -280:
-        game_is_on = False
-        scoreboard.game_over()
+        scoreboard.reset()
+        snake.reset()
         
     #Detect collision with tail
     for segment in snake.segments[1:]:
-        if snake.head.distance(segment) < 10:
-            game_is_on = False
-            scoreboard.game_over()
-    
+        if segment == snake.head:
+            pass
+        elif snake.head.distance(segment) < 10:
+            scoreboard.reset()
+            snake.reset()
     
 screen.exitonclick()
